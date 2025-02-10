@@ -1,0 +1,27 @@
+﻿@model IQueryable<Ticket>
+@{
+    ViewData["Title"] = "Ticket";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<div class="container-fluid p-0" data-bs-theme="dark">
+    <div class="card bg-dark text-light shadow-lg border border-secondary rounded-0">
+        @foreach (var p in Model)
+        {
+            <div class="card-header bg-black text-white py-3">
+                <h3 class="card-title mb-1">@p.Title</h3>
+                <p class="card-text text-secondary">- @p.Distributor</p>
+            </div>
+            <div class="card-body">
+                <div class="row text-center justify-content-between px-3 py-2">
+                    <div class="col text-white">@p.Date</div>
+                    <div class="col text-white fw-bold">@p.Price.ToString("c")</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+</html>

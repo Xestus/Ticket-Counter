@@ -1,0 +1,40 @@
+@model IQueryable<Ticket>
+@{
+    ViewData["Title"] = "Ticket";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/Home">Ticket Counter</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            @foreach (var q in Model)
+            {
+                <button class="btn btn-outline-light m-1" onclick="filterTickets('@q.Distributor')">
+                    @q.Distributor
+                </button>            
+            }
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                    More
+                </a>
+
+            </li>
+        </ul>
+    </div>
+    <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search">
+        <button class="btn btn-outline-light" type="submit">Search</button>
+    </form>
+</nav>
+</html>
+
+<script>
+    function filterTickets(q) {
+        window.location.href = '?distributor=' + q;
+    }
+</script>
