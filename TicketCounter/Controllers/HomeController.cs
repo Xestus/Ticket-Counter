@@ -25,35 +25,23 @@ public class HomeController : Controller
 
         if (!string.IsNullOrEmpty(sort))
         {
-            string[] condition = sort.Split('-');
+            var condition = sort.Split('-');
 
-            if (condition[0].ToLower() == "price")
+            if (condition.Length == 2 && 
+                Enum.TryParse(condition[0], true, out SortField result) &&
+                Enum.TryParse(condition[1], true,out SortOrder sortResult))
             {
-                if (condition[1].ToLower() == "descending")
+                tickets = sortResult switch
                 {
-                    tickets = tickets.OrderByDescending(p => p.Price);
-                }
-
-                else
-                {
-                    tickets = tickets.OrderBy(p => p.Price);
-                }
-            }
-
-            else
-            {
-                if (condition[1].ToLower() == "descending")
-                {
-                    tickets = tickets.OrderByDescending(p => p.Date);
-                }
-
-                else
-                {
-                    tickets = tickets.OrderBy(p => p.Date);
-                }
+                    SortOrder.Ascending => result == SortField.Date ? tickets.OrderBy(p => p.Date) : tickets.OrderBy(p => p.Price),
+                    SortOrder.Descending => result == SortField.Date ? tickets.OrderByDescending(p => p.Date) : tickets.OrderByDescending(p => p.Price),
+                };
             }
         }
 
         return View(tickets);
     }
 }
+
+enum SortField { Price, Date }
+enum SortOrder { Ascending, Descending }
