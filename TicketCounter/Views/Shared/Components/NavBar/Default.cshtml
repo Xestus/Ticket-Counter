@@ -4,7 +4,7 @@
 }
 <!DOCTYPE html>
 <html lang="en">
-
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/Home">Ticket Counter</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -12,31 +12,65 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            @foreach (var q in Model.Distributor)
+            @if (Model.Distributor != null)
             {
-                <button class="btn btn-outline-light m-1" onclick="filterTickets('@q')">
-                    @q
-                </button>            
+                foreach (var q in Model.Distributor)
+                {
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light m-1" onclick="filterTickets('@q')">
+                            @q
+                        </button>
+                    </li>
+                }
             }
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                    Dropdown Placeholder
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-bs-toggle="dropdown">
+                    Sort Options
                 </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <button class="dropdown-item" onclick="additionalFilterTickets('Price-Descending')">Price High
+                            To Low
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" onclick="additionalFilterTickets('Price-Ascending')">Price Low To
+                            High
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" onclick="additionalFilterTickets('Date-Descending')">Date
+                            Descending
+                        </button>
+                    </li>
+                    <li>
+                        <button class="dropdown-item" onclick="additionalFilterTickets('Date-Ascending')">Date
+                            Ascending
+                        </button>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
-    <form class="d-flex">
+    <form class="d-flex" method="get" action="/">
         <input class="form-control me-2" type="search" name="searchQuery" placeholder="Search">
         <button class="btn btn-outline-light" type="submit">Search</button>
     </form>
 </nav>
-</html>
 
 <script>
-    function filterTickets(q)
-    {
-        window.location.href = '?distributor=' + q;
+    function filterTickets(q) {
+        let params = new URLSearchParams(window.location.search);
+        params.set("distributor", q);
+        window.location.search = params.toString();
     }
-    
-    
+
+    function additionalFilterTickets(q) {
+        let params = new URLSearchParams(window.location.search);
+        params.set("sort", q);
+        window.location.search = params.toString();
+    }
 </script>
+</body>
+</html>
