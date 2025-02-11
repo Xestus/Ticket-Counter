@@ -124,3 +124,4 @@
 /home/meringue/RiderProjects/TicketCounter/TicketCounter/obj/Debug/net8.0/TicketCounter.pdb
 /home/meringue/RiderProjects/TicketCounter/TicketCounter/obj/Debug/net8.0/TicketCounter.genruntimeconfig.cache
 /home/meringue/RiderProjects/TicketCounter/TicketCounter/obj/Debug/net8.0/ref/TicketCounter.dll
+/home/meringue/RiderProjects/TicketCounter/TicketCounter/obj/Debug/net8.0/TicketCounter.sourcelink.json

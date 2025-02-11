@@ -1,4 +1,4 @@
-@model IQueryable<Ticket>
+@model TicketCounter.Components.Parameters
 @{
     ViewData["Title"] = "Ticket";
 }
@@ -12,29 +12,31 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            @foreach (var q in Model)
+            @foreach (var q in Model.Distributor)
             {
-                <button class="btn btn-outline-light m-1" onclick="filterTickets('@q.Distributor')">
-                    @q.Distributor
+                <button class="btn btn-outline-light m-1" onclick="filterTickets('@q')">
+                    @q
                 </button>            
             }
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                    More
+                    Dropdown Placeholder
                 </a>
-
             </li>
         </ul>
     </div>
     <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search">
+        <input class="form-control me-2" type="search" name="searchQuery" placeholder="Search">
         <button class="btn btn-outline-light" type="submit">Search</button>
     </form>
 </nav>
 </html>
 
 <script>
-    function filterTickets(q) {
+    function filterTickets(q)
+    {
         window.location.href = '?distributor=' + q;
     }
+    
+    
 </script>
