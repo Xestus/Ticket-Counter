@@ -1,20 +1,41 @@
 namespace TicketCounter.Models;
-
-// Total ticket number count
-// Total ticket price count
-// Ticket Addition
-// Ticket Removing
-
-// Make another cart inherit you which performs all logical operation.
-
 public class Cart
 {
-    public List<Information> infoList { get; set; }
+    public List<Information> InfoList { get; set; } = new List<Information?>();
+    public void Addition(Ticket ticket)
+    {
+
+        Information? info = InfoList.FirstOrDefault(p => p.Tickets.Id == ticket.Id);
+
+        if (info == null)
+        {
+            InfoList.Add(new Information { Tickets = ticket, Quantity = 1 });
+        }
+        else
+        {
+            info.Quantity += 1;
+        }
+    }
+
+    public void Remove(Ticket ticket)
+    {
+        Information? info = InfoList.FirstOrDefault(p => p.Tickets.Id == ticket.Id);
+
+        if (info != null)
+        {
+            InfoList.Remove(info);
+        }
+    }
+    
+    public decimal TotalPrice()
+    {
+        return InfoList.Sum(e => e.Tickets.Price * e.Quantity);
+    }
 }
 
 public class Information
 {
-    public Ticket tickets { get; set; }
-    public int quantity { get; set; }
-    public decimal price { get; set; }
+    public Ticket Tickets { get; set; } = null!;
+    public int Quantity { get; set; }
+    public decimal Price => Tickets.Price * Quantity;
 }

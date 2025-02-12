@@ -1,0 +1,42 @@
+@model Cart;
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Cart</title>
+</head>
+<table class="table table-dark table-striped table-bordered table-hover">
+    <thead class="table-primary">
+    <tr>
+        <th>Event</th>
+        <th>Distributor</th>
+        <th>Date</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.InfoList)
+    {
+        <tr>
+            <td>@item.Tickets.Title</td>
+            <td>@item.Tickets.Distributor</td>
+            <td>@item.Tickets.Date.ToShortDateString()</td>
+            <td>@item.Quantity</td>
+            <td>@(item.Tickets.Price * item.Quantity)</td>
+        </tr>
+    }
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>@Model.TotalPrice()</td>
+    </tr>
+    </tbody>
+</table>
+</html>

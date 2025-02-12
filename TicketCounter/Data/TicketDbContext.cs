@@ -9,5 +9,4 @@ public class TicketDbContext : DbContext
     }
     
     public DbSet<Ticket> Tickets => Set<Ticket>();
-    
 }

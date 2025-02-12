@@ -12,6 +12,12 @@
             <div class="card-header bg-black text-white py-3">
                 <h3 class="card-title mb-1">@p.Title</h3>
                 <p class="card-text text-secondary">- @p.Distributor</p>
+                <form asp-action="Cart" asp-controller="Home" method="post">
+                    <input type="hidden" name="Id" value="@p.Id" />
+                    <button type="submit" class="btn btn-success">Add to Cart</button>
+                </form>
+
+
             </div>
             <div class="card-body">
                 <div class="row text-center justify-content-between px-3 py-2">

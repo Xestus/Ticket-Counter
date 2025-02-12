@@ -7,6 +7,7 @@ builder.Services.AddDbContext<TicketDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnections") ?? string.Empty));
 
 builder.Services.AddScoped<ITicketRepository, EFTicketRepository>();
+builder.Services.AddSingleton<Cart>();
 
 var app = builder.Build();
 

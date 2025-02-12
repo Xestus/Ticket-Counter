@@ -1,12 +1,16 @@
+using static TicketCounter.Models.Cart;
+
 namespace TicketCounter.Controllers;
 
 public class HomeController : Controller
 {
     public ITicketRepository Repo;
+    public readonly Cart cart;
 
-    public HomeController(ITicketRepository repo)
+    public HomeController(ITicketRepository repo, Cart cart)
     {
         this.Repo = repo;
+        this.cart = cart;
     }
 
     public IActionResult Index(string distributor, string searchQuery, string sort)
@@ -25,23 +29,33 @@ public class HomeController : Controller
 
         if (!string.IsNullOrEmpty(sort))
         {
-            var condition = sort.Split('-');
+            var condition = sort.Split('-'); 
 
             if (condition.Length == 2 && 
-                Enum.TryParse(condition[0], true, out SortField result) &&
-                Enum.TryParse(condition[1], true,out SortOrder sortResult))
+                Enum.TryParse(condition[0], true, out SortField field) && 
+                Enum.TryParse(condition[1], true, out SortOrder order))
             {
-                tickets = sortResult switch
+                tickets = field switch
                 {
-                    SortOrder.Ascending => result == SortField.Date ? tickets.OrderBy(p => p.Date) : tickets.OrderBy(p => p.Price),
-                    SortOrder.Descending => result == SortField.Date ? tickets.OrderByDescending(p => p.Date) : tickets.OrderByDescending(p => p.Price),
+                    SortField.Price => order == SortOrder.Descending ? tickets.OrderByDescending(p => p.Price) : tickets.OrderBy(p => p.Price),
+                    SortField.Date => order == SortOrder.Descending ? tickets.OrderByDescending(p => p.Date) : tickets.OrderBy(p => p.Date),
+                    _ => tickets 
                 };
             }
         }
-
         return View(tickets);
+    }
+
+    public IActionResult Cart(Ticket ticket)
+    {
+        Ticket tick = Repo.Tickets.FirstOrDefault(t => t.Id == ticket.Id);
+        if (tick != null)
+        {
+            cart.Addition(tick); 
+        }
+        return View(cart);
     }
 }
 
-enum SortField { Price, Date }
+enum SortField {  Date, Price }
 enum SortOrder { Ascending, Descending }

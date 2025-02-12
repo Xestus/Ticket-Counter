@@ -60,13 +60,15 @@
 </nav>
 
 <script>
-    function filterTickets(q) {
+    function filterTickets(q)
+    {
         let params = new URLSearchParams(window.location.search);
         params.set("distributor", q);
-        window.location.search = params.toString();
+        window.location.href = "/home/?" + params.toString();
     }
 
-    function additionalFilterTickets(q) {
+    function additionalFilterTickets(q)
+    {
         let params = new URLSearchParams(window.location.search);
         params.set("sort", q);
         window.location.search = params.toString();
